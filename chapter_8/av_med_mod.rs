@@ -29,9 +29,10 @@ fn mode(list: &Vec<i32>) -> i32 {
         *element += 1;
     }
     // Handles the posibility of having two numbers that repeat the same number of times
-    for (_, repetitions) in map {count_register.append(repetitions)}
+    for (_, repetitions) in &map {count_register.push(repetitions)}
     count_register.sort();
-    if count_register[-1] == count_register[-2] {return result}
+    println!("{:?}", count_register);
+    if count_register[count_register.len() - 1] == count_register[count_register.len() - 2] {return result}
     // Handles the case that no number repeats or there is one that does
     for (number, rep) in map {
         if rep > counter {
@@ -45,7 +46,7 @@ fn mode(list: &Vec<i32>) -> i32 {
 
 fn main() {
     // Be sure to change the vector so that you can experiment
-    let mut num_list: Vec<i32> = vec![12,34,16,22,32,40,12];
+    let mut num_list: Vec<i32> = vec![12,34,16,12,32,40,12];
     println!("The mean is: {}", mean(&num_list));
     println!("The median is: {}", median(&mut num_list));
     println!("The mode is: {}", mode(&num_list));
