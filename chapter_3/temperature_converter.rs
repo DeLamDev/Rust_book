@@ -2,20 +2,29 @@
 
 use std::io::stdin;
 
-fn fahr_to_cel(number:  i16) ->  i16 {
-    ((number - 32) * 5) / 9
+fn fahrenheit_celsius(number:  i16) ->  i16 {
+    (number - 32) * 5/9
 }
 
-fn cel_to_fahr(number: i16) -> i16 {
-    number * 9 / 5 + 32
+fn celsius_fahrenheit(number: i16) -> i16 {
+    number * 9/5 + 32
 }
 
 
 fn main() {
     loop {
+        let mut cont_choice = String::new();
         println!("Do you wish to convert Fahrenheit or Celsius (F/C)?");
         let mut choice = String::new();
         stdin().read_line(&mut choice).expect("Failed to read the line.");
+        let choice: String = match choice.trim().to_lowercase().as_str() {
+            "f" => "f".to_string(),
+            "c" => "c".to_string(),
+            _ => {
+                println!("Please enter either F or C.");
+                continue;
+            }
+        };
         println!("Input the number:");
         let mut number = String::new();
         stdin().read_line(&mut number).expect("Failed to read the line.");
@@ -26,20 +35,16 @@ fn main() {
                     continue;
                 },
         };
-        if choice.trim().to_lowercase() == "f" {    
-            println!("{} Fahrenheit = {} celcius", number, fahr_to_cel(number));
+        if choice == "f" {    
+            println!("{} Fahrenheit = {} celcius", number, fahrenheit_celsius(number));
         } else if choice.trim().to_lowercase() == "c" {
-            println!("{} celsius = {} Fahrenheit", number, cel_to_fahr(number));
-        } else {
-            println!("Please only answer F or C.");
-            continue;
+            println!("{} celsius = {} Fahrenheit", number, celsius_fahrenheit(number));
         }
-        choice.clear();
         println!("Continue using? (Y/N):");
-        stdin().read_line(&mut choice).expect("Failed to read line.");
-        if choice.trim().to_lowercase() == "n" {
+        stdin().read_line(&mut cont_choice).expect("Failed to read line.");
+        if cont_choice.trim().to_lowercase() == "n" {
             break;
-        } else if choice.trim().to_lowercase() == "y" {
+        } else if cont_choice.trim().to_lowercase() == "y" {
             continue;
         } else {
             println!("Unexpected answer, terminating.");
